@@ -1,0 +1,530 @@
+/* MarkyLoop Custom Styles */
+
+/* General Styles */
+body {
+    background-color: #f0f0f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding-top: 0;
+    transition: filter 0.3s ease;
+}
+
+/* Dark Theme */
+html.dark-theme {
+    filter: invert(0.85) hue-rotate(180deg) !important;
+}
+
+/* html.dark-theme .side-menu {
+    filter: invert(1) hue-rotate(180deg);
+} */
+
+/* Restore video colors in dark theme */
+html.dark-theme .video-container {
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* Header/Navbar Styles */
+.navbar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
+
+.navbar {
+    /* background-color: #ffffff !important; */
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #007bff !important;
+}
+
+.navbar .btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.navbar .btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Main Container Styles */
+.main-container {
+    width: 70%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    transition: margin-right 0.3s ease;
+}
+
+.main-container.menu-open {
+    margin-right: 25%;
+}
+
+/* Side Menu */
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -25%;
+    width: 25%;
+    height: 100vh;
+    background-color: #ffffff;
+    border-left: 1px solid #dee2e6;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1020;
+    overflow-y: auto;
+}
+
+.side-menu.open {
+    right: 0;
+}
+
+.side-menu-header {
+    padding: 75px 20px 15px 20px;
+    border-bottom: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.side-menu-content {
+    padding: 20px;
+}
+
+/* Presets List */
+.presets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preset-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+
+.preset-item:hover {
+    background-color: #e9ecef;
+    border-color: #007bff;
+    transform: translateY(-1px);
+}
+
+.preset-item:active {
+    transform: translateY(0);
+}
+
+/* Video Container */
+.video-container {
+    position: relative;
+    width: 100%;
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin: 0 auto; /* Center the video container */
+    aspect-ratio: 16 / 9;
+    max-height: 500px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Current Time Display */
+.current-time-display {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #495057;
+    margin: 0;
+    flex: 1;
+    text-align: left;
+}
+
+#currentTime {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+    padding: 2px 4px;
+}
+
+#currentTime:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+}
+
+#stopLoopBtn {
+    flex: 0 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.speed-control {
+    min-width: 200px;
+    flex: 1;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.speed-control .form-range {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.speed-control label {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+#speedValue {
+    font-size: 0.9rem;
+    min-width: 45px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Magic Text Editing */
+.magic-text {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+
+.magic-text:hover {
+    background-color: #e9ecef;
+}
+
+.magic-text.editing {
+    background-color: transparent;
+    cursor: text;
+}
+
+.magic-text-input {
+    border: none;
+    background: transparent;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    outline: 2px solid #007bff;
+    border-radius: 4px;
+    padding: 2px 4px;
+    width: 100%;
+}
+
+/* Timecode Tiles Container */
+.timecode-tiles-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.timecode-tiles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0;
+}
+
+/* Timecode Tile Styles */
+.timecode-tile {
+    display: block;
+    background: linear-gradient(145deg, #ffffff, #f1f3f4);
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    min-width: 200px;
+    max-width: 200px;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.timecode-tile:hover {
+    /* transform: translateY(-1px); */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Add Tile Button */
+.add-tile-btn {
+    background: linear-gradient(145deg, #e8f4fd, #d1ecf1);
+    border: 2px dashed #007bff;
+    color: #007bff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 177px;
+    min-width: 200px;
+    max-width: 200px;
+    flex: 0 0 auto;
+}
+
+.add-tile-btn:hover {
+    background: linear-gradient(145deg, #d1ecf1, #bee5eb);
+    border-color: #0056b3;
+    color: #0056b3;
+}
+
+.add-tile-btn i {
+    font-size: 1.5rem;
+}
+
+/* Timecode Tile Content */
+.tile-header {
+    margin-bottom: 12px;
+}
+
+.tile-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #212529;
+    margin-bottom: 8px;
+    word-break: break-word;
+}
+
+.tile-times {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.time-input {
+    background: transparent;
+    border: none;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    width: 80px;
+    text-align: center;
+}
+
+.time-input:focus {
+    outline: 2px solid #007bff;
+    background-color: #fff;
+}
+
+/* Tile Controls */
+.tile-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.play-btn {
+    background: linear-gradient(145deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.play-btn:hover {
+    background: linear-gradient(145deg, #218838, #1e7e34);
+    transform: translateY(-1px);
+}
+
+/* Loop Button */
+.loop-btn {
+    background: transparent;
+    border: 1px solid #6c757d;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    font-weight: bold;
+    min-width: 50px;
+}
+
+.loop-btn.mode-0 {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.loop-btn.mode-1 {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.loop-btn.mode-2 {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.loop-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Delete Button */
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.timecode-tile:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Save/Load Controls - removed since moved to header */
+
+/* Modal Customization */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 20px 24px 16px;
+}
+
+.modal-body {
+    padding: 20px 24px;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 16px 24px 20px;
+}
+
+/* Form Controls */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        width: 95%;
+        padding: 1rem 0.5rem;
+    }
+    
+    .timecode-tiles-wrapper {
+        flex-direction: column;
+    }
+    
+    .timecode-tile,
+    .add-tile-btn {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .tile-times {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .tile-controls {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+    }
+    
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+}
+
+/* Animation for tile addition */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timecode-tile.new {
+    animation: slideIn 0.3s ease;
+}
+
+/* Error/Success Messages */
+.alert {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Loading State */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Button hover effects */
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Header styling */
+h1 {
+    color: #212529;
+    font-weight: 600;
+}
+
+/* Icon styling */
+.fas {
+    transition: transform 0.2s ease;
+}
+
+button:hover .fas {
+    transform: scale(1.1);
+}
