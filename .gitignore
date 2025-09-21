@@ -121,3 +121,4 @@ fabric.properties
 TZ.txt
 yt_links.txt
 *.code-workspace
+.DS_Store
