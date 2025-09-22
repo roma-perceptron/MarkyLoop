@@ -7,17 +7,31 @@ class MarkyLoop {
         this.timecodes = [
             {
                 id: Date.now(),
-                name: 'Базовый лик',
-                start: 214.9,
-                end: 219.75,
-                mode: 1 // 0: A>B, 1: A<>B, 2: B>A
+                name: 'Разбор',
+                start: 173,
+                end: 212,5,
+                mode: 0 // 0: A>B, 1: A<>B, 2: B>A
             },
             {
                 id: Date.now() + 1,
+                name: 'Базовый лик, счёт',
+                start: 214.9,
+                end: 219.75,
+                mode: 1
+            },
+            {
+                id: Date.now() + 2,
+                name: 'Базовый лик',
+                start: 217,65,
+                end: 219.75,
+                mode: 1
+            },
+            {
+                id: Date.now() + 3,
                 name: 'Джем',
                 start: 62.65,
                 end: 118.25,
-                mode: 1 // 0: A>B, 1: A<>B, 2: B>A
+                mode: 1
             },
         ];
         this.currentVideoId = '';
