@@ -22,7 +22,7 @@ class MarkyLoop {
             {
                 id: Date.now() + 2,
                 name: 'Базовый лик',
-                start: 217,65,
+                start: 217.65,
                 end: 219.75,
                 mode: 1
             },
