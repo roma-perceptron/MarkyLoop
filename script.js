@@ -9,7 +9,7 @@ class MarkyLoop {
                 id: Date.now(),
                 name: 'Разбор',
                 start: 173,
-                end: 212,5,
+                end: 212.5,
                 mode: 0 // 0: A>B, 1: A<>B, 2: B>A
             },
             {
