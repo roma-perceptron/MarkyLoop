@@ -1,0 +1,20 @@
+{
+  "videoId": "nUUyFrHERpU",
+  "title": "BoomBoom",
+  "timecodes": [
+    {
+      "id": 1757232945214,
+      "name": "Целиком",
+      "start": 0,
+      "end": 13.25,
+      "mode": 1
+    },
+    {
+      "id": 1757234023748,
+      "name": "Только вторая часть",
+      "start": 6.75,
+      "end": 13.25,
+      "mode": 1
+    }
+  ]
+}

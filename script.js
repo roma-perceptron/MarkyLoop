@@ -110,11 +110,6 @@ class MarkyLoop {
             this.copyCurrentTimeToClipboard();
         });
 
-        // Refresh presets button
-        document.getElementById('refreshPresetsBtn').addEventListener('click', () => {
-            this.loadPresets();
-        });
-
         // File input change
         document.getElementById('loadFile').addEventListener('change', (e) => {
             this.loadFromFile(e.target.files[0]);
@@ -825,91 +820,165 @@ class MarkyLoop {
     async loadPresets() {
         const presetsList = document.getElementById('presetsList');
         
+        // Load built-in presets first
+        this.loadBuiltInPresets();
+        
         // Check if File System Access API is supported
         if ('showDirectoryPicker' in window) {
             // Modern browser - show directory picker button
-            presetsList.innerHTML = `
-                <div class="text-center">
-                    <button class="btn btn-primary" id="selectPresetsFolder">
-                        <i class="fas fa-folder-open me-2"></i>
-                        Выбрать папку пресетов
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('selectPresetsFolder').addEventListener('click', () => {
-                this.selectPresetsFolder();
-            });
-        } else {
-            // Fallback for browsers without File System Access API
-            presetsList.innerHTML = `
-                <div class="text-center">
-                    <input type="file" id="presetFileInput" multiple accept=".MarkyLoop" style="display: none;">
-                    <button class="btn btn-secondary" onclick="document.getElementById('presetFileInput').click()">
-                        <i class="fas fa-upload me-2"></i>
-                        Загрузить пресеты
-                    </button>
-                    <div class="text-muted mt-2 small">Можно выбрать несколько файлов</div>
-                </div>
-            `;
-            
-            document.getElementById('presetFileInput').addEventListener('change', (e) => {
-                this.loadMultiplePresets(e.target.files);
-            });
-        }
-    }
-    
-    // Select presets folder using File System Access API
-    async selectPresetsFolder() {
-        try {
-            const dirHandle = await window.showDirectoryPicker();
-            const presets = [];
-            
-            for await (const [name, handle] of dirHandle.entries()) {
-                if (handle.kind === 'file' && name.endsWith('.MarkyLoop')) {
-                    presets.push({ name, handle });
+            const loadButton = document.createElement('button');
+            loadButton.className = 'preset-item load-custom-presets';
+            loadButton.innerHTML = '<i class="fas fa-folder-open me-2"></i>Загрузить пользовательские пресеты';
+            loadButton.addEventListener('click', async () => {
+                try {
+                    const dirHandle = await window.showDirectoryPicker();
+                    const presets = [];
+                    
+                    for await (const [name, handle] of dirHandle.entries()) {
+                        if (handle.kind === 'file' && name.endsWith('.MarkyLoop')) {
+                            presets.push({ name, handle });
+                        }
+                    }
+                    
+                    this.renderCustomPresetsList(presets);
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.error('Error accessing directory:', error);
+                        this.showAlert('Ошибка доступа к папке', 'danger');
+                    }
                 }
-            }
+            });
             
-            this.renderPresetsList(presets);
+            presetsList.appendChild(loadButton);
+        } else {
+            // Fallback - show file input for multiple files
+            const loadButton = document.createElement('button');
+            loadButton.className = 'preset-item load-custom-presets';
+            loadButton.innerHTML = '<i class="fas fa-folder-open me-2"></i>Загрузить пользовательские пресеты';
             
-        } catch (error) {
-            if (error.name !== 'AbortError') {
-                console.error('Error selecting folder:', error);
-                this.showAlert('Ошибка выбора папки', 'danger');
-            }
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.multiple = true;
+            fileInput.accept = '.MarkyLoop';
+            fileInput.style.display = 'none';
+            
+            loadButton.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    this.loadMultiplePresets(e.target.files);
+                }
+            });
+            
+            presetsList.appendChild(loadButton);
+            presetsList.appendChild(fileInput);
         }
     }
     
-    // Load multiple preset files (fallback method)
-    loadMultiplePresets(files) {
-        const presets = Array.from(files)
-            .filter(file => file.name.endsWith('.MarkyLoop'))
-            .map(file => ({ name: file.name, file }));
-            
-        this.renderPresetsList(presets, true);
-    }
-    
-    // Render presets list
-    renderPresetsList(presets, isFileList = false) {
+    // Load built-in presets
+    loadBuiltInPresets() {
         const presetsList = document.getElementById('presetsList');
         
+        // Clear existing content
+        presetsList.innerHTML = '';
+        
+        // Add built-in presets section header
+        const header = document.createElement('div');
+        header.className = 'presets-section-header';
+        header.textContent = 'Встроенные пресеты';
+        presetsList.appendChild(header);
+        
+        // Add built-in preset buttons
+        Object.keys(presets).forEach(presetName => {
+            const presetButton = document.createElement('button');
+            presetButton.className = 'preset-item';
+            presetButton.textContent = presetName;
+            presetButton.addEventListener('click', () => {
+                this.loadBuiltInPreset(presetName);
+            });
+            presetsList.appendChild(presetButton);
+        });
+        
+        // Add separator
+        const separator = document.createElement('div');
+        separator.className = 'presets-separator';
+        presetsList.appendChild(separator);
+    }
+    
+    // Load built-in preset by name
+    loadBuiltInPreset(presetName) {
+        if (presets[presetName]) {
+            this.loadData(presets[presetName]);
+            this.showAlert(`Пресет загружен: ${presetName}`, 'success');
+        } else {
+            this.showAlert('Пресет не найден', 'danger');
+        }
+    }
+    
+    // Render custom presets list
+    renderCustomPresetsList(presets) {
+        const presetsList = document.getElementById('presetsList');
+        
+        // Add custom presets section header
+        const header = document.createElement('div');
+        header.className = 'presets-section-header';
+        header.textContent = 'Пользовательские пресеты';
+        presetsList.appendChild(header);
+        
         if (presets.length === 0) {
-            presetsList.innerHTML = '<div class="text-muted text-center">Пресеты не найдены</div>';
+            const noPresets = document.createElement('div');
+            noPresets.className = 'text-muted text-center';
+            noPresets.textContent = 'Пресеты не найдены';
+            presetsList.appendChild(noPresets);
             return;
         }
         
-        presetsList.innerHTML = '';
         presets.forEach(preset => {
             const presetButton = document.createElement('button');
             presetButton.className = 'preset-item';
             presetButton.textContent = preset.name.replace('.MarkyLoop', '');
             presetButton.addEventListener('click', () => {
-                if (isFileList) {
-                    this.loadPresetFromFile(preset.file);
-                } else {
-                    this.loadPresetFromHandle(preset.handle);
-                }
+                this.loadPresetFromHandle(preset.handle);
+            });
+            presetsList.appendChild(presetButton);
+        });
+    }
+    
+    // Load multiple preset files (fallback method)
+    loadMultiplePresets(files) {
+        const customPresets = Array.from(files)
+            .filter(file => file.name.endsWith('.MarkyLoop'))
+            .map(file => ({ name: file.name, file }));
+            
+        this.renderCustomPresetsFromFiles(customPresets);
+    }
+    
+    // Render custom presets from files
+    renderCustomPresetsFromFiles(presets) {
+        const presetsList = document.getElementById('presetsList');
+        
+        // Add custom presets section header
+        const header = document.createElement('div');
+        header.className = 'presets-section-header';
+        header.textContent = 'Пользовательские пресеты';
+        presetsList.appendChild(header);
+        
+        if (presets.length === 0) {
+            const noPresets = document.createElement('div');
+            noPresets.className = 'text-muted text-center';
+            noPresets.textContent = 'Пресеты не найдены';
+            presetsList.appendChild(noPresets);
+            return;
+        }
+        
+        presets.forEach(preset => {
+            const presetButton = document.createElement('button');
+            presetButton.className = 'preset-item';
+            presetButton.textContent = preset.name.replace('.MarkyLoop', '');
+            presetButton.addEventListener('click', () => {
+                this.loadPresetFromFile(preset.file);
             });
             presetsList.appendChild(presetButton);
         });
@@ -941,6 +1010,7 @@ class MarkyLoop {
             this.showAlert('Ошибка загрузки пресета', 'danger');
         }
     }
+    
     toggleTheme() {
         const html = document.documentElement;
         const button = document.getElementById('themeToggleBtn');
