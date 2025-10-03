@@ -108,6 +108,58 @@ html.dark-theme .video-container {
     gap: 8px;
 }
 
+.presets-section-header {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin: 16px 0 8px 0;
+    padding: 0 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.presets-section-header:first-child {
+    margin-top: 0;
+}
+
+.presets-separator {
+    height: 1px;
+    background-color: #dee2e6;
+    margin: 16px 0;
+}
+
+.preset-item {
+    padding: 12px 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+}
+
+.preset-item:hover {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+    transform: translateY(-1px);
+}
+
+.preset-item.load-custom-presets {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    text-align: center;
+    font-weight: 500;
+}
+
+.preset-item.load-custom-presets:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
 .preset-item {
     background-color: #f8f9fa;
     border: 1px solid #dee2e6;
